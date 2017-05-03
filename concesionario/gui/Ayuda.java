@@ -33,6 +33,7 @@ public class Ayuda extends JDialog {
 		}
 	}
 
+
 	/**
 	 * Create the dialog.
 	 */

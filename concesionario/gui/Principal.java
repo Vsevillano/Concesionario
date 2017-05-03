@@ -258,9 +258,8 @@ public class Principal extends JFrame implements Serializable {
 		JMenuItem mntmVerAyuda = new JMenuItem("Ver la Ayuda");
 		mntmVerAyuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Ayuda ayuda = new Ayuda();
-				ayuda.setVisible(true);
-			}
+			      VentanaAuxiliar.getVentanaAuxiliarUnica();
+			 }
 		});
 		mnAyuda.add(mntmVerAyuda);
 		mnAyuda.add(mntmACercaDe);
