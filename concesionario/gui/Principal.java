@@ -1,4 +1,5 @@
 package concesionario.gui;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.HeadlessException;
@@ -75,9 +76,8 @@ public class Principal extends JFrame implements Serializable {
 			public void actionPerformed(ActionEvent arg0) {
 				if (Fichero.almacen.isModificado()) {
 					Object[] options = { "Aceptar", "No", "Cancelar" };
-					int respuesta = JOptionPane.showOptionDialog(null, "No ha guardado, ¿Desea Guardar?",
-							"!!", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
-							options, options[0]);
+					int respuesta = JOptionPane.showOptionDialog(null, "No ha guardado, ¿Desea Guardar?", "!!",
+							JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 					if (respuesta == 0) {
 						// Si respondemos Aceptar
 						guardarComoFile();
@@ -107,9 +107,8 @@ public class Principal extends JFrame implements Serializable {
 			public void actionPerformed(ActionEvent e) {
 				if (Fichero.almacen.isModificado()) {
 					Object[] options = { "Aceptar", "No", "Cancelar" };
-					int respuesta = JOptionPane.showOptionDialog(null, "No ha guardado, ¿Desea Guardar?",
-							"!!", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
-							options, options[0]);
+					int respuesta = JOptionPane.showOptionDialog(null, "No ha guardado, ¿Desea Guardar?", "!!",
+							JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 					if (respuesta == 0) {
 						guardarComoFile();
 					} else if (respuesta == 1) {
@@ -125,8 +124,7 @@ public class Principal extends JFrame implements Serializable {
 					try {
 						abrirArchivo();
 					} catch (IOException | ClassNotFoundException ex) {
-						JOptionPane.showMessageDialog(null, "Error al abrir archivo", "!!",
-								JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Error al abrir archivo", "!!", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
@@ -173,8 +171,8 @@ public class Principal extends JFrame implements Serializable {
 				if (Fichero.almacen.isModificado()) {
 					Object[] options = { "Aceptar", "No", "Cancelar" };
 					int respuesta = JOptionPane.showOptionDialog(null, "No ha guardado, ¿Desea Guardar?",
-							"No has guardado!", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
-							options, options[0]);
+							"No has guardado!", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
+							options[0]);
 					if (respuesta == 0) {
 						guardarComoFile();
 					} else if (respuesta == 1) {
@@ -217,8 +215,7 @@ public class Principal extends JFrame implements Serializable {
 					mostrarConcesionario = new MostrarConcesionario();
 					mostrarConcesionario.setVisible(true);
 				} catch (IndexOutOfBoundsException e) {
-					JOptionPane.showMessageDialog(null, "Concesinario vacio!", "?",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Concesinario vacio!", "?", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -234,7 +231,7 @@ public class Principal extends JFrame implements Serializable {
 				MostrarPorMatricula mostrarPorMatricula = new MostrarPorMatricula();
 				mostrarPorMatricula.setVisible(true);
 			}
-			
+
 		});
 		mnBuscar_1.add(mntmPorMatricula);
 
@@ -257,7 +254,7 @@ public class Principal extends JFrame implements Serializable {
 				acercaDe.setVisible(true);
 			}
 		});
-		
+
 		JMenuItem mntmVerAyuda = new JMenuItem("Ver la Ayuda");
 		mntmVerAyuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -288,7 +285,7 @@ public class Principal extends JFrame implements Serializable {
 	private void guardarComoFile() {
 		filechooser.setAcceptAllFileFilterUsed(false);
 		filechooser.addChoosableFileFilter(filtro);
-		
+
 		if (filechooser.APPROVE_OPTION == filechooser.showDialog(filechooser, "Guardar")) {
 			filechooser.setAcceptAllFileFilterUsed(false);
 			// Si el archivo existe, informamos de ello y en funcion de la

@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -16,8 +14,6 @@ import javax.swing.border.EmptyBorder;
 import concesionario.estructura.Coche;
 import concesionario.estructura.Color;
 import concesionario.estructura.Fichero;
-import concesionario.estructura.Marca;
-import concesionario.estructura.Modelo;
 
 public class MostrarPorColor extends VentanaPadre {
 
@@ -90,6 +86,7 @@ public class MostrarPorColor extends VentanaPadre {
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					indiceCoche = 0;
 					copia = Fichero.almacen.getCochesColor(seleccionarColor());
 					mostrarCoche(indiceCoche);
 					comprobarBotones();

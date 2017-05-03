@@ -2,23 +2,23 @@ package concesionario.gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import concesionario.estructura.Coche;
 import concesionario.estructura.Fichero;
 import concesionario.excepciones.CocheNoExisteException;
 import concesionario.excepciones.MatriculaNoValidaException;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class BorrarCoche extends VentanaPadre {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private int indiceCoche = 0;
 
@@ -87,7 +87,7 @@ public class BorrarCoche extends VentanaPadre {
 
 			public void actionPerformed(ActionEvent e) {
 
-					mostrarCoche(indiceCoche);
+				mostrarCoche(indiceCoche);
 			}
 		});
 		btnEnviar.setText("Buscar");

@@ -1,6 +1,5 @@
 package concesionario.gui;
 
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -64,7 +63,7 @@ public class VentanaPadre extends JDialog {
 		}
 		return modelos.toArray();
 	}
-	
+
 	/**
 	 * Create the dialog.
 	 */
@@ -74,53 +73,53 @@ public class VentanaPadre extends JDialog {
 		contentPanel.setBounds(10, 11, 422, 210);
 		getContentPane().add(contentPanel);
 		contentPanel.setLayout(null);
-		
+
 		JLabel lblMatricula = new JLabel("Matricula:");
 		lblMatricula.setBounds(32, 22, 67, 23);
 		contentPanel.add(lblMatricula);
-		
+
 		textMatricula = new JTextField();
 		textMatricula.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				
+
 			}
 		});
 		textMatricula.setBounds(109, 23, 157, 20);
 		contentPanel.add(textMatricula);
 		textMatricula.setColumns(10);
-		
+
 		JLabel lblColor = new JLabel("Color:");
 		lblColor.setBounds(32, 69, 46, 14);
 		contentPanel.add(lblColor);
-		
+
 		rdbtnPlata = new JRadioButton("Plata");
 		buttonGroup.add(rdbtnPlata);
 		rdbtnPlata.setBounds(103, 65, 58, 23);
 		contentPanel.add(rdbtnPlata);
-		
+
 		rdbtnRojo = new JRadioButton("Rojo");
 		buttonGroup.add(rdbtnRojo);
 		rdbtnRojo.setBounds(181, 65, 58, 23);
 		contentPanel.add(rdbtnRojo);
-		
+
 		rdbtnAzul = new JRadioButton("Azul");
 		buttonGroup.add(rdbtnAzul);
 		rdbtnAzul.setBounds(255, 65, 58, 23);
 		contentPanel.add(rdbtnAzul);
-		
+
 		btnAdelante = new JButton(">");
 		btnAdelante.setBounds(339, 154, 58, 30);
 		contentPanel.add(btnAdelante);
-		
+
 		btnAtras = new JButton("<");
 		btnAtras.setBounds(270, 154, 58, 30);
 		contentPanel.add(btnAtras);
-		
+
 		JLabel lblMarca = new JLabel("Marca:");
 		lblMarca.setBounds(34, 122, 46, 14);
 		contentPanel.add(lblMarca);
-		
+
 		comboMarca = new JComboBox();
 		comboMarca.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
@@ -130,15 +129,15 @@ public class VentanaPadre extends JDialog {
 		comboMarca.setModel(new DefaultComboBoxModel(Marca.values()));
 		comboMarca.setBounds(90, 118, 107, 22);
 		contentPanel.add(comboMarca);
-		
+
 		JLabel lblModelo = new JLabel("Modelo");
 		lblModelo.setBounds(34, 161, 46, 14);
 		contentPanel.add(lblModelo);
-		
+
 		comboModelo = new JComboBox();
 		comboModelo.setBounds(90, 157, 107, 22);
 		contentPanel.add(comboModelo);
-		
+
 		btnEnviar = new JButton("Buscar");
 		btnEnviar.setBounds(271, 111, 126, 38);
 		contentPanel.add(btnEnviar);

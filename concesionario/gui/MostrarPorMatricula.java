@@ -2,20 +2,14 @@ package concesionario.gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import concesionario.estructura.Coche;
-import concesionario.estructura.Color;
 import concesionario.estructura.Fichero;
-import concesionario.estructura.Marca;
-import concesionario.estructura.Modelo;
 import concesionario.excepciones.CocheNoExisteException;
 import concesionario.excepciones.MatriculaNoValidaException;
 import java.awt.event.ActionListener;
@@ -29,7 +23,6 @@ public class MostrarPorMatricula extends VentanaPadre {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private int indiceCoche = 0;
-
 
 	/**
 	 * Launch the application.

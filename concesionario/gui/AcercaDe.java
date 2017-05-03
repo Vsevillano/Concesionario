@@ -44,11 +44,12 @@ public class AcercaDe extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		
+
 		JTextPane txtpnGuiDesarrolladoPor = new JTextPane();
 		txtpnGuiDesarrolladoPor.setFont(new Font("Tahoma", Font.BOLD, 11));
 		txtpnGuiDesarrolladoPor.setEditable(false);
-		txtpnGuiDesarrolladoPor.setText("\t\r\n\r\n\r\n\tGUI desarrollado por:\r\n\t\t\r\n\t\tVictoriano Sevillano Vega\r\n\r\n\r\n\tCopyright 2017. IES Gran Capit\u00E1n (C\u00F3rdoba)\r\n\r\n\r\n\r\n\r\nM\u00E1s informaci\u00F3n en http://moodle.iesgrancapitan.org");
+		txtpnGuiDesarrolladoPor.setText(
+				"\t\r\n\r\n\r\n\tGUI desarrollado por:\r\n\t\t\r\n\t\tVictoriano Sevillano Vega\r\n\r\n\r\n\tCopyright 2017. IES Gran Capit\u00E1n (C\u00F3rdoba)\r\n\r\n\r\n\r\n\r\nM\u00E1s informaci\u00F3n en http://moodle.iesgrancapitan.org");
 		txtpnGuiDesarrolladoPor.setBounds(0, 0, 442, 240);
 		contentPanel.add(txtpnGuiDesarrolladoPor);
 		{
