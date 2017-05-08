@@ -17,10 +17,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.awt.event.InputEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -29,16 +28,14 @@ import javax.swing.JSeparator;
 public class Principal extends JFrame implements Serializable {
 
 	private final Filtro filtro = new Filtro(".obj", "Objeto");
-	private AcercaDe acercaDe;
-	private AnnadirCoche annadir;
-	private BorrarCoche borrarCoche;
-	private MostrarConcesionario mostrarConcesionario;
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JFileChooser filechooser = new JFileChooser();
+	private Ayuda ayuda = null;
 
 	/**
 	 * Launch the application.
@@ -60,6 +57,7 @@ public class Principal extends JFrame implements Serializable {
 	 * Create the frame.
 	 */
 	public Principal() {
+		filechooser.setSelectedFile(new File("*.obj"));
 		setTitle("Sin_titulo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -74,30 +72,8 @@ public class Principal extends JFrame implements Serializable {
 		JMenuItem mntmNuevo = new JMenuItem("Nuevo");
 		mntmNuevo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (Fichero.almacen.isModificado()) {
-					Object[] options = { "Aceptar", "No", "Cancelar" };
-					int respuesta = JOptionPane.showOptionDialog(null, "No ha guardado, ¿Desea Guardar?", "!!",
-							JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-					if (respuesta == 0) {
-						// Si respondemos Aceptar
-						guardarComoFile();
-						Fichero.almacen = new Concesionario();
-						setTitle("Sin_titulo");
-						Fichero.almacen.setModificado(false);
-					} else if (respuesta == 1) {
-						// Si respondemos No
-						Fichero.almacen = new Concesionario();
-						setTitle(filechooser.getSelectedFile().getName());
-						Fichero.almacen.setModificado(false);
-					} else {
-					}
-				} else {
-					Fichero.almacen = new Concesionario();
-					setTitle("Sin_titulo");
-					Fichero.almacen.setModificado(false);
-				}
+				nuevo();
 			}
-
 		});
 		mntmNuevo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
 		mnArchivo.add(mntmNuevo);
@@ -105,28 +81,7 @@ public class Principal extends JFrame implements Serializable {
 		JMenuItem mntmAbrir = new JMenuItem("Abrir");
 		mntmAbrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (Fichero.almacen.isModificado()) {
-					Object[] options = { "Aceptar", "No", "Cancelar" };
-					int respuesta = JOptionPane.showOptionDialog(null, "No ha guardado, ¿Desea Guardar?", "!!",
-							JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-					if (respuesta == 0) {
-						guardarComoFile();
-					} else if (respuesta == 1) {
-						try {
-							abrirArchivo();
-						} catch (IOException | ClassNotFoundException ex) {
-							JOptionPane.showMessageDialog(null, "Error al abrir archivo", "!!",
-									JOptionPane.ERROR_MESSAGE);
-						}
-					} else {
-					}
-				} else {
-					try {
-						abrirArchivo();
-					} catch (IOException | ClassNotFoundException ex) {
-						JOptionPane.showMessageDialog(null, "Error al abrir archivo", "!!", JOptionPane.ERROR_MESSAGE);
-					}
-				}
+				abrir();
 			}
 		});
 
@@ -136,18 +91,7 @@ public class Principal extends JFrame implements Serializable {
 		JMenuItem mntmGuardar = new JMenuItem("Guardar");
 		mntmGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (getTitle().equalsIgnoreCase("Sin_titulo")) {
-					guardarComoFile();
-					Fichero.almacen.setModificado(false);
-
-				} else {
-					try {
-						Fichero.guardar(Fichero.almacen, filechooser.getSelectedFile());
-						Fichero.almacen.setModificado(false);
-
-					} catch (IOException ex) {
-					}
-				}
+				guardar();
 			}
 		});
 		mntmGuardar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
@@ -157,7 +101,6 @@ public class Principal extends JFrame implements Serializable {
 		mntmGuardarComo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				guardarComoFile();
-				Fichero.almacen.setModificado(false);
 			}
 		});
 		mnArchivo.add(mntmGuardarComo);
@@ -168,20 +111,7 @@ public class Principal extends JFrame implements Serializable {
 		JMenuItem mntmSalir = new JMenuItem("Salir");
 		mntmSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (Fichero.almacen.isModificado()) {
-					Object[] options = { "Aceptar", "No", "Cancelar" };
-					int respuesta = JOptionPane.showOptionDialog(null, "No ha guardado, ¿Desea Guardar?",
-							"No has guardado!", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
-							options[0]);
-					if (respuesta == 0) {
-						guardarComoFile();
-					} else if (respuesta == 1) {
-						System.exit(0);
-					} else {
-					}
-				} else {
-					System.exit(0);
-				}
+				salir();
 			}
 		});
 		mnArchivo.add(mntmSalir);
@@ -193,7 +123,7 @@ public class Principal extends JFrame implements Serializable {
 		JMenuItem mntmAadir = new JMenuItem("A\u00F1adir");
 		mntmAadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				annadir = new AnnadirCoche();
+				AnnadirCoche annadir = new AnnadirCoche();
 				annadir.setVisible(true);
 			}
 		});
@@ -202,7 +132,7 @@ public class Principal extends JFrame implements Serializable {
 		JMenuItem mntmBorrar = new JMenuItem("Borrar");
 		mntmBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				borrarCoche = new BorrarCoche();
+				BorrarCoche borrarCoche = new BorrarCoche();
 				borrarCoche.setVisible(true);
 			}
 		});
@@ -212,7 +142,7 @@ public class Principal extends JFrame implements Serializable {
 		mntmMostrarConcesionario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					mostrarConcesionario = new MostrarConcesionario();
+					MostrarConcesionario mostrarConcesionario = new MostrarConcesionario();
 					mostrarConcesionario.setVisible(true);
 				} catch (IndexOutOfBoundsException e) {
 					JOptionPane.showMessageDialog(null, "Concesinario vacio!", "?", JOptionPane.ERROR_MESSAGE);
@@ -250,16 +180,22 @@ public class Principal extends JFrame implements Serializable {
 		JMenuItem mntmACercaDe = new JMenuItem("Acerca del Concesionario");
 		mntmACercaDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				acercaDe = new AcercaDe();
+				AcercaDe acercaDe = new AcercaDe();
 				acercaDe.setVisible(true);
 			}
 		});
 
 		JMenuItem mntmVerAyuda = new JMenuItem("Ver la Ayuda");
+		mntmVerAyuda.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		mntmVerAyuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			      VentanaAuxiliar.getVentanaAuxiliarUnica();
-			 }
+				if (ayuda == null) {
+					ayuda = new Ayuda();
+					ayuda.setVisible(true);
+				} else {
+					ayuda.setVisible(true);
+				}
+			}
 		});
 		mnAyuda.add(mntmVerAyuda);
 		mnAyuda.add(mntmACercaDe);
@@ -271,38 +207,119 @@ public class Principal extends JFrame implements Serializable {
 
 	}
 
+	/**
+	 * Crea un nuevo concesionario y comprueba los cambios del anterior
+	 */
+	private void nuevo() {
+		if (Fichero.almacen.isModificado()) {
+			int respuesta = JOptionPane.showConfirmDialog(filechooser, "No ha guardado, ¿Desea Guardar?", "!!",
+					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+			if (respuesta == JOptionPane.YES_OPTION) {
+				// Si respondemos Aceptar
+				guardarComoFile();
+				Fichero.almacen = new Concesionario();
+				setTitle("Sin_titulo");
+				Fichero.almacen.setModificado(false);
+			} else if (respuesta == JOptionPane.NO_OPTION) {
+				// Si respondemos No
+				Fichero.almacen = new Concesionario();
+				setTitle(filechooser.getSelectedFile().getName());
+				Fichero.almacen.setModificado(false);
+			} else {
+			}
+		} else {
+			Fichero.almacen = new Concesionario();
+			setTitle("Sin_titulo");
+			Fichero.almacen.setModificado(false);
+		}
+	}
+
+	/**
+	 * Abre un archivo a partir de un filechoose
+	 * 
+	 * @throws HeadlessException
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	private void abrirArchivo() throws HeadlessException, IOException, ClassNotFoundException {
 		filechooser.setAcceptAllFileFilterUsed(false);
 		filechooser.addChoosableFileFilter(filtro);
-		if (filechooser.showDialog(filechooser, "Abrir Archivo") == filechooser.APPROVE_OPTION) {
+		if (filechooser.showDialog(filechooser, "Abrir Archivo") == JFileChooser.APPROVE_OPTION) {
 			Fichero.abrir(filechooser.getSelectedFile());
 			setTitle(filechooser.getSelectedFile().getName());
 			Fichero.almacen.setModificado(false);
 		}
 	}
 
+	/**
+	 * Abre un nuevo concesionario y comprueba si esta modificado
+	 */
+	private void abrir() {
+		if (Fichero.almacen.isModificado()) {
+			int respuesta = JOptionPane.showConfirmDialog(filechooser, "No ha guardado, ¿Desea Guardar?", "!!",
+					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+			if (respuesta == JOptionPane.YES_OPTION) {
+				guardarComoFile();
+			} else if (respuesta == JOptionPane.NO_OPTION) {
+				try {
+					abrirArchivo();
+				} catch (IOException | ClassNotFoundException ex) {
+					JOptionPane.showMessageDialog(null, "Error al abrir archivo", "!!", JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+				// No hacemos nada en cado de cancelar
+			}
+		} else {
+			try {
+				abrirArchivo();
+			} catch (IOException | ClassNotFoundException ex) {
+				JOptionPane.showMessageDialog(null, "Error al abrir archivo", "!!", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+
+	/**
+	 * Guarda un archivo
+	 */
+	private void guardar() {
+		if (getTitle().equalsIgnoreCase("Sin_titulo")) {
+			guardarComoFile();
+		} else {
+			try {
+				Fichero.guardar(Fichero.almacen, filechooser.getSelectedFile());
+				Fichero.almacen.setModificado(false);
+				setTitle(filechooser.getSelectedFile().getName());
+			} catch (IOException ex) {
+			}
+		}
+	}
+
+	/**
+	 * Guarda un archivo y comprueba si existe
+	 */
 	private void guardarComoFile() {
 		filechooser.setAcceptAllFileFilterUsed(false);
 		filechooser.addChoosableFileFilter(filtro);
 
-		if (filechooser.APPROVE_OPTION == filechooser.showDialog(filechooser, "Guardar")) {
+		if (JFileChooser.APPROVE_OPTION == filechooser.showDialog(filechooser, "Guardar")) {
 			filechooser.setAcceptAllFileFilterUsed(false);
 			// Si el archivo existe, informamos de ello y en funcion de la
 			// respuesta ...
 			if (filechooser.getSelectedFile().exists()) {
 
-				Object[] options = { "Si", "No" };
-				int respuesta = JOptionPane.showOptionDialog(null, "El archivo ya existe, ¿Desea Sobreescribir?",
-						"Guardando", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
-						options[0]);
+				int respuesta = JOptionPane.showConfirmDialog(filechooser,
+						"El archivo ya existe, ¿Desea sobreescribir?", "!!", JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.WARNING_MESSAGE);
 				// Si la respuesta es Si, guardamos el archivo con el nombre
-				if (respuesta == 0) {
+				if (respuesta == JOptionPane.YES_OPTION) {
 					try {
 						Fichero.guardarComo(Fichero.almacen, filechooser.getSelectedFile());
 						JOptionPane.showMessageDialog(null, "El archivo ha sido guardado", "Aceptar",
 								JOptionPane.INFORMATION_MESSAGE);
+						Fichero.almacen.setModificado(false);
+						setTitle(filechooser.getSelectedFile().getName());
 					} catch (IOException ex) {
-						Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+						ex.printStackTrace();
 					}
 					// Si la respuesta es No, informaremos de que no se ha
 					// guardado
@@ -310,20 +327,36 @@ public class Principal extends JFrame implements Serializable {
 					JOptionPane.showMessageDialog(null, "El archivo no se ha guardado", "Error!",
 							JOptionPane.ERROR_MESSAGE);
 				}
-
 			}
 			// Si el archivo no existe guardamos
 			else {
 				try {
 					Fichero.guardar(Fichero.almacen, filechooser.getSelectedFile());
+					Fichero.almacen.setModificado(false);
+					setTitle(filechooser.getSelectedFile().getName());
 				} catch (IOException e) {
 					JOptionPane.showMessageDialog(null, "El archivo no se ha guardado", "Error!",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
+		}
+	}
 
-			setTitle(filechooser.getSelectedFile().getName());
-			Fichero.almacen.setModificado(false);
+	/**
+	 * Sale del programa comprobando cambios
+	 */
+	private void salir() {
+		if (Fichero.almacen.isModificado()) {
+			int respuesta = JOptionPane.showConfirmDialog(filechooser, "No ha guardado, ¿Desea Guardar?", "!!",
+					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+			if (respuesta == JOptionPane.YES_OPTION) {
+				guardarComoFile();
+			} else if (respuesta == JOptionPane.NO_OPTION) {
+				System.exit(0);
+			} else {
+			}
+		} else {
+			System.exit(0);
 		}
 	}
 

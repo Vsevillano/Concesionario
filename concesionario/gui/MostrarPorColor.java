@@ -82,6 +82,10 @@ public class MostrarPorColor extends VentanaPadre {
 	 */
 	public MostrarPorColor() {
 		cancelButton.setText("Cerrar");
+		btnAdelante.setEnabled(false);
+		btnAtras.setEnabled(false);
+
+		cancelButton.setText("Cerrar");
 		setTitle("Mostrar por color");
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

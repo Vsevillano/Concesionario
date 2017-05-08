@@ -1,5 +1,9 @@
 package concesionario.estructura;
 
+import java.util.ArrayList;
+
+import javax.swing.JComboBox;
+
 /**
  * Representa los modelos. Según el enunciado del examen:
  * 
@@ -107,5 +111,18 @@ public enum Modelo {
 		return VALUES;
 	}
 	// -------------------------------------------------
-
+	
+	/**
+	 * Obtiene un array de modelos de BMW
+	 * @return
+	 */
+	public static Object[] getModelo() {
+		ArrayList<Modelo> arrayModelo = new ArrayList<Modelo>();
+		for (Modelo modelo : Modelo.values()) {
+			if (modelo.getMarca() == Marca.BMW) {
+			arrayModelo.add(modelo);
+			}
+		}
+		return  arrayModelo.toArray();
+	}
 }

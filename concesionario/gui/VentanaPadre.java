@@ -9,6 +9,8 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+
+import concesionario.estructura.Fichero;
 import concesionario.estructura.Marca;
 import concesionario.estructura.Modelo;
 
@@ -34,8 +36,8 @@ public class VentanaPadre extends JDialog {
 	protected JRadioButton rdbtnAzul;
 	protected JButton btnAdelante;
 	protected JButton btnAtras;
-	protected JComboBox comboMarca;
-	protected JComboBox comboModelo;
+	protected JComboBox<Marca> comboMarca;
+	protected JComboBox<Modelo> comboModelo;
 	protected JButton btnEnviar;
 	protected JButton okButton;
 	protected JButton cancelButton;
@@ -53,7 +55,13 @@ public class VentanaPadre extends JDialog {
 		}
 	}
 
-	private Object[] getModelo(JComboBox cBMarca) {
+	/**
+	 * Obtiene un array de modelos a partir de la marca del combobox
+	 * 
+	 * @param cBMarca
+	 * @return
+	 */
+	private Object[] getModelo(JComboBox<Marca> cBMarca) {
 		Marca marca = (Marca) cBMarca.getSelectedItem();
 		ArrayList<Modelo> modelos = new ArrayList<Modelo>();
 		for (Modelo m : Modelo.values()) {
@@ -82,7 +90,15 @@ public class VentanaPadre extends JDialog {
 		textMatricula.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
+				if (!Fichero.almacen.checkMatricula(textMatricula.getText())) {
+					textMatricula.setForeground(java.awt.Color.RED);
+					textMatricula.setText(textMatricula.getText().toUpperCase());
+				}
+			}
 
+			@Override
+			public void focusGained(FocusEvent e) {
+				textMatricula.setForeground(java.awt.Color.BLACK);
 			}
 		});
 		textMatricula.setBounds(109, 23, 157, 20);
@@ -108,39 +124,39 @@ public class VentanaPadre extends JDialog {
 		rdbtnAzul.setBounds(255, 65, 58, 23);
 		contentPanel.add(rdbtnAzul);
 
-		btnAdelante = new JButton(">");
-		btnAdelante.setBounds(339, 154, 58, 30);
-		contentPanel.add(btnAdelante);
-
-		btnAtras = new JButton("<");
-		btnAtras.setBounds(270, 154, 58, 30);
-		contentPanel.add(btnAtras);
-
 		JLabel lblMarca = new JLabel("Marca:");
 		lblMarca.setBounds(34, 122, 46, 14);
 		contentPanel.add(lblMarca);
 
-		comboMarca = new JComboBox();
+		comboMarca = new JComboBox<Marca>();
 		comboMarca.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				comboModelo.setModel(new DefaultComboBoxModel(getModelo(comboMarca)));
 			}
 		});
-		comboMarca.setModel(new DefaultComboBoxModel(Marca.values()));
 		comboMarca.setBounds(90, 118, 107, 22);
 		contentPanel.add(comboMarca);
+		comboMarca.setModel(new DefaultComboBoxModel(Marca.values()));
 
 		JLabel lblModelo = new JLabel("Modelo");
 		lblModelo.setBounds(34, 161, 46, 14);
 		contentPanel.add(lblModelo);
 
-		comboModelo = new JComboBox();
+		comboModelo = new JComboBox(new DefaultComboBoxModel(Modelo.getModelo()));
 		comboModelo.setBounds(90, 157, 107, 22);
 		contentPanel.add(comboModelo);
 
 		btnEnviar = new JButton("Buscar");
 		btnEnviar.setBounds(271, 111, 126, 38);
 		contentPanel.add(btnEnviar);
+
+		btnAtras = new JButton("<");
+		btnAtras.setBounds(270, 154, 58, 30);
+		contentPanel.add(btnAtras);
+
+		btnAdelante = new JButton(">");
+		btnAdelante.setBounds(339, 154, 58, 30);
+		contentPanel.add(btnAdelante);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBounds(0, 220, 442, 41);
@@ -158,7 +174,7 @@ public class VentanaPadre extends JDialog {
 				cancelButton.setBounds(340, 11, 77, 23);
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						setVisible(false);
+						dispose();
 					}
 				});
 				cancelButton.setActionCommand("Cancel");

@@ -60,7 +60,7 @@ public class AcercaDe extends JDialog {
 				JButton cancelButton = new JButton("Aceptar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						setVisible(false);
+						dispose();
 					}
 				});
 				cancelButton.setActionCommand("Cancel");

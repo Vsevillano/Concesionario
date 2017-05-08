@@ -25,10 +25,6 @@ public class Fichero implements Serializable {
 	 * Concesionario que se utilizara en todo el programa
 	 */
 	public static Concesionario almacen = new Concesionario();
-	/**
-	 * Patrón que controla la extensión del archivo
-	 */
-	private static final Pattern patron = Pattern.compile("^((\\w)+(\\.obj))$");
 
 	/**
 	 * Método guardar un objeto pidiendo un nombre de archivo que se creara

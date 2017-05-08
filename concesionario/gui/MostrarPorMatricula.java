@@ -65,19 +65,17 @@ public class MostrarPorMatricula extends VentanaPadre {
 	/**
 	 * Create the dialog.
 	 */
-	public MostrarPorMatricula() {
-		cancelButton.setText("Cerrar");
+	public MostrarPorMatricula() {		
 		setTitle("Mostrar por matricula");
+		
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
 
-					mostrarCoche(indiceCoche);
-
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "No hay coches del color seleccionado!", "Aceptar",
-							JOptionPane.ERROR_MESSAGE);
-				}
+					if (Fichero.almacen.checkMatricula(textMatricula.getText()))
+						mostrarCoche(indiceCoche);
+					else
+						JOptionPane.showMessageDialog(null, "Matricula no valida!", "Aceptar",
+								JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		btnAdelante.setVisible(false);

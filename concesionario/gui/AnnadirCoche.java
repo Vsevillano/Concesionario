@@ -58,6 +58,7 @@ public class AnnadirCoche extends VentanaPadre {
 	 * Create the dialog.
 	 */
 	public AnnadirCoche() {
+		setTitle("A\u00F1adir coche");
 		textMatricula.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {

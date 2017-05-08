@@ -7,11 +7,6 @@ import concesionario.excepciones.CocheNoExisteException;
 import concesionario.excepciones.CocheYaExisteException;
 import concesionario.excepciones.MatriculaNoValidaException;
 
-/*
- * No pueden existir dos coches con la misma matrícula en el almacén del concesinario
- * no puede añadirse un coche al concecionario con alguno de sus atributos inválidos. Han de conocerse todas sus características 
- * Ninguno de los valores puede ser por defecto
- */
 /**
  * Representa un concesionario de coches.
  * 
@@ -36,21 +31,27 @@ public class Concesionario implements Serializable {
 	 * Nombre del concesionario
 	 */
 	private final String nombre = "IES Gran Capitán";
-	
+	/**
+	 * Bandera que me indica si el concesionario ha sido modificado
+	 */
 	private boolean modificado = false;
-	
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isModificado() {
 		return modificado;
 	}
 
+	/**
+	 * 
+	 * @param modificado
+	 */
 	public void setModificado(boolean modificado) {
 		this.modificado = modificado;
 	}
 
-	// P:Por qué no se necesita que annadir devuelva boolean??????
-	// P:Por qué no se especifican todas las excepciones de forma
-	// explícita??????
 	/**
 	 * Añade un coche al concesinario
 	 * 
@@ -65,17 +66,11 @@ public class Concesionario implements Serializable {
 	 *             ya hay otro con la misma matrícula o porque faltan datos
 	 */
 	public void annadir(String matricula, Color color, Modelo modelo) throws Exception {
-		// Coche coche = Coche.instanciarCoche(matricula, color, modelo);
-
-		// if (coche == null || almacen.contains(coche))
-		// return false;
-		// return almacen.add(coche);
 		Coche coche = new Coche(matricula, color, modelo);
 		if (!almacen.contains(coche))
 			almacen.add(coche);
 		else
-			throw new CocheYaExisteException(
-					"El coche ya existe en el concesionario. ");
+			throw new CocheYaExisteException("El coche ya existe en el concesionario. ");
 	}
 
 	/**
@@ -109,22 +104,13 @@ public class Concesionario implements Serializable {
 	 * @throws MatriculaNoValidaException
 	 *             Si la matrícula no es válida
 	 */
-	public Coche get(String matricula) throws MatriculaNoValidaException,
-			CocheNoExisteException {
-		// Coche coche = Coche.instanciarCoche(matricula);
-		// int index = almacen.indexOf(new Coche(matricula));
-		// if (index != -1) {
-		// P: qué sucede si el coche no está en el concesionario?
-
+	public Coche get(String matricula) throws MatriculaNoValidaException, CocheNoExisteException {
 		try {
 			return almacen.get(almacen.indexOf(new Coche(matricula)));
 		} catch (ArrayIndexOutOfBoundsException e) {
-			throw new CocheNoExisteException(
-					"El coche no está en el concesionario.");
+			throw new CocheNoExisteException("El coche no está en el concesionario.");
 		}
 
-		// }
-		// return null;
 	}
 
 	/*
@@ -137,6 +123,12 @@ public class Concesionario implements Serializable {
 		return "Concesionario " + nombre + "[almacen=" + almacen + "]";
 	}
 
+	/**
+	 * Obtiene los coches por el color
+	 * 
+	 * @param color
+	 * @return
+	 */
 	public ArrayList<Coche> getCochesColor(Color color) {
 		ArrayList<Coche> arrCochesColor = new ArrayList<Coche>();
 		for (Coche coche : almacen) {
@@ -146,20 +138,36 @@ public class Concesionario implements Serializable {
 		return arrCochesColor;
 	}
 
-	public String[][] toArray(){
+	/**
+	 * 
+	 * @return
+	 */
+	public String[][] toArray() {
 		String[][] array = new String[almacen.size()][3];
 		for (int i = 0; i < array.length; i++) {
-			array[i][0]=almacen.get(i).getMatricula();
-			array[i][1]=String.valueOf(almacen.get(i).getColor());
-			array[i][2]=String.valueOf(almacen.get(i).getModelo());
+			array[i][0] = almacen.get(i).getMatricula();
+			array[i][1] = String.valueOf(almacen.get(i).getColor());
+			array[i][2] = String.valueOf(almacen.get(i).getModelo());
 		}
 		return array;
 	}
-	
+
+	/**
+	 * Obtiene un coche por indice
+	 * 
+	 * @param indice
+	 * @return
+	 */
 	public Coche get(int indice) {
 		return almacen.get(indice);
 	}
 
+	/**
+	 * Comprueba que la matricula sea valida
+	 * 
+	 * @param text
+	 * @return
+	 */
 	public boolean checkMatricula(String text) {
 		return Coche.esValida(text);
 	}
