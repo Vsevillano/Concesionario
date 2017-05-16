@@ -2,7 +2,6 @@ package concesionario.estructura;
 
 import java.util.ArrayList;
 
-import javax.swing.JComboBox;
 
 /**
  * Representa los modelos. Según el enunciado del examen:

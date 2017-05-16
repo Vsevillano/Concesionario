@@ -5,14 +5,15 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 
 import concesionario.estructura.Fichero;
 import concesionario.estructura.Marca;
 import concesionario.estructura.Modelo;
+
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
@@ -93,7 +94,7 @@ public class VentanaPadre extends JDialog {
 				if (!Fichero.almacen.checkMatricula(textMatricula.getText())) {
 					textMatricula.setForeground(java.awt.Color.RED);
 					textMatricula.setText(textMatricula.getText().toUpperCase());
-				}
+				} 
 			}
 
 			@Override

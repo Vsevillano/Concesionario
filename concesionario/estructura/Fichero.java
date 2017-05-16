@@ -8,19 +8,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.regex.Pattern;
 
 /**
  *
  * @author Victoriano Sevillano Vega
  * @version 1.0
  */
-public class Fichero implements Serializable {
-	/**
-	* 
-	*/
-	private static final long serialVersionUID = 1L;
+public class Fichero {
 	/**
 	 * Concesionario que se utilizara en todo el programa
 	 */

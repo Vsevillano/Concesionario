@@ -2,6 +2,7 @@ package concesionario.estructura;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 import concesionario.excepciones.CocheNoExisteException;
 import concesionario.excepciones.CocheYaExisteException;
@@ -171,4 +172,19 @@ public class Concesionario implements Serializable {
 	public boolean checkMatricula(String text) {
 		return Coche.esValida(text);
 	}
+
+	public ListIterator<Coche> listIterator() {
+		return almacen.listIterator();
+	}
+	
+	public ListIterator<Coche> listIterator(int index) {
+		return almacen.listIterator(index);
+	}
+
+	public int indexOf(Coche coche) {
+		// TODO Auto-generated method stub
+		return almacen.indexOf(coche);
+	}
+	
+	
 }
