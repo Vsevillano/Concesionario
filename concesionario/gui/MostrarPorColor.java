@@ -75,8 +75,8 @@ public class MostrarPorColor extends VentanaPadre {
 	private void cocheSiguiente() {
 		if (it.hasNext()) {
 			coche = it.next();
-			if (Fichero.almacen.indexOf(coche) < Fichero.almacen.getCochesColor(seleccionarColor()).size() - 1)
-				coche = it.next();
+//			if (Fichero.almacen.indexOf(coche) < Fichero.almacen.getCochesColor(seleccionarColor()).size() - 1)
+//				coche = it.next();
 		}
 		mostrarCoche();
 	}
@@ -87,8 +87,8 @@ public class MostrarPorColor extends VentanaPadre {
 	private void cocheAnterior() {
 		if (it.hasPrevious()) {
 			coche = it.previous();
-			if (Fichero.almacen.getCochesColor(seleccionarColor()).indexOf(coche) > 0)
-				coche = it.previous();
+//			if (Fichero.almacen.getCochesColor(seleccionarColor()).indexOf(coche) > 0)
+//				coche = it.previous();
 		}
 		mostrarCoche();
 
@@ -98,12 +98,16 @@ public class MostrarPorColor extends VentanaPadre {
 	 * Comprueba la visibilidad de los botones
 	 */
 	private void comprobarBotones() {
-		if (!it.hasNext())
+		if (!it.hasNext()) {
 			btnAdelante.setEnabled(false);
+			coche = it.previous();
+		}
 		else
 			btnAdelante.setEnabled(true);
-		if (!it.hasPrevious())
+		if (!it.hasPrevious()) {
 			btnAtras.setEnabled(false);
+			coche = it.next();
+		}
 		else
 			btnAtras.setEnabled(true);
 	}

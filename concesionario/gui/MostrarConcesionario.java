@@ -44,8 +44,6 @@ public class MostrarConcesionario extends VentanaPadre {
 	private void cocheSiguiente() {
 		if (it.hasNext()) {
 			coche = it.next();
-			if (Fichero.almacen.indexOf(coche) < Fichero.almacen.size() - 1)
-				coche = it.next();
 		}
 		mostrarCoche();
 	}
@@ -57,8 +55,6 @@ public class MostrarConcesionario extends VentanaPadre {
 
 		if (it.hasPrevious()) {
 			coche = it.previous();
-			if (Fichero.almacen.indexOf(coche) > 0)
-				coche = it.previous();
 		}
 		mostrarCoche();
 
@@ -68,12 +64,16 @@ public class MostrarConcesionario extends VentanaPadre {
 	 * Comprueba la visibilidad de los botones
 	 */
 	private void comprobarBotones() {
-		if (!it.hasNext())
+		if (!it.hasNext()) {
 			btnAdelante.setEnabled(false);
+			coche = it.previous();
+		}
 		else
 			btnAdelante.setEnabled(true);
-		if (!it.hasPrevious())
+		if (!it.hasPrevious()) {
 			btnAtras.setEnabled(false);
+			coche = it.next();
+		}
 		else
 			btnAtras.setEnabled(true);
 	}
@@ -137,7 +137,8 @@ public class MostrarConcesionario extends VentanaPadre {
 	
 			it = Fichero.almacen.listIterator();
 			coche = it.next();
-			cocheAnterior();
+			mostrarCoche();
+			btnAtras.setEnabled(false);
 
 
 	}
