@@ -1,6 +1,6 @@
 package concesionario.utiles;
 
-import concesionario.estructura.Color;
+import concesionarioSize.estructura.Color;
 
 /**
  * Clase utilizada para la gestión de un menú. Se dedica a:

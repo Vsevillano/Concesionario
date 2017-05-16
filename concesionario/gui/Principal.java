@@ -20,10 +20,13 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.NoSuchElementException;
 import java.awt.event.InputEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Principal extends JFrame implements Serializable {
 
@@ -57,9 +60,19 @@ public class Principal extends JFrame implements Serializable {
 	 * Create the frame.
 	 */
 	public Principal() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				salir();
+			}
+			@Override
+			public void windowClosed(WindowEvent e) {
+				salir();
+			}
+		});
 		filechooser.setSelectedFile(new File("*.obj"));
 		setTitle("Sin_titulo");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -144,7 +157,7 @@ public class Principal extends JFrame implements Serializable {
 				try {
 					MostrarConcesionario mostrarConcesionario = new MostrarConcesionario();
 					mostrarConcesionario.setVisible(true);
-				} catch (IndexOutOfBoundsException e) {
+				} catch (IndexOutOfBoundsException | NoSuchElementException  e) {
 					JOptionPane.showMessageDialog(null, "Concesinario vacio!", "?", JOptionPane.ERROR_MESSAGE);
 				}
 			}

@@ -1,14 +1,11 @@
 package concesionario.estructura;
 
-//P: indica las etiquetas html utilizadas para la documentación de la clase
-//P: Indica la utilidad de la etiqueta  -noqualifier  all a la hora de generar la documentación JavaDoc. Entrega un pantallazo indicando cómo se detalla en Eclipse
-
-import concesionario.utiles.Menu;
-import concesionario.utiles.Teclado;
 import concesionario.estructura.Color;
 import concesionario.estructura.Modelo;
 import concesionario.excepciones.CocheNoExisteException;
 import concesionario.excepciones.MatriculaNoValidaException;
+import concesionario.utiles.Menu;
+import concesionario.utiles.Teclado;
 
 /**
  * Queremos modelar un concesionario de coches en Java. Nos limitaremos a las

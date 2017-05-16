@@ -47,6 +47,7 @@ public class Ayuda extends JDialog {
 		contentPanel.setLayout(null);
 		
 		JTextPane txtpnAyudaACerca = new JTextPane();
+		txtpnAyudaACerca.setEditable(false);
 		txtpnAyudaACerca.setText("\r\nAyuda a cerca del Concesionario:\r\n\r\nMenu Coche:\r\n\t- Alta --> Crea un nuevo coche. Patron de la matricula: 1111SSS, 1234FGH\r\n\t- Baja --> Elimina un coche por matricula\r\n\t- Mostrar concesionario --> Muestra todos los coches en el concesionario\r\n\r\nMenu Buscar:\r\n\t- Por matricula --> Busca un coche por matricula\r\n\t- Por color --> Busca un coche por color");
 		txtpnAyudaACerca.setBounds(10, 11, 411, 217);
 		contentPanel.add(txtpnAyudaACerca);

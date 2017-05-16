@@ -64,7 +64,12 @@ public class AnnadirCoche extends VentanaPadre {
 			public void focusLost(FocusEvent arg0) {
 				if (!Fichero.almacen.checkMatricula(textMatricula.getText()))
 					textMatricula.setForeground(java.awt.Color.RED);
+				else {
+					textMatricula.setForeground(java.awt.Color.BLACK);
+					textMatricula.setText(textMatricula.getText().toUpperCase());
+				}
 			}
+			
 
 			@Override
 			public void focusGained(FocusEvent e) {
